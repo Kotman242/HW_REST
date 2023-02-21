@@ -1,9 +1,10 @@
 package ru.netology.hw_rest.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ru.netology.hw_rest.annotation.ValidUser;
 import ru.netology.hw_rest.model.Authorities;
+import ru.netology.hw_rest.model.User;
 import ru.netology.hw_rest.service.AuthorizationService;
 
 import java.util.List;
@@ -12,13 +13,13 @@ import java.util.List;
 public class AuthorizationController {
     AuthorizationService service;
 
+    @GetMapping("/authorize")
+    public List<Authorities> getAuthorities(@ValidUser User user) {
+        return service.getAuthorities(user);
+    }
+
     public AuthorizationController(AuthorizationService service) {
         this.service = service;
     }
-
-    @GetMapping("/authorize")
-    public List<Authorities> getAuthorities(@RequestParam("user") String user,
-                                            @RequestParam("password") String password) {
-        return service.getAuthorities(user, password);
-    }
 }
+
