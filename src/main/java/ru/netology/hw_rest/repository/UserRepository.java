@@ -1,10 +1,10 @@
 package ru.netology.hw_rest.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.netology.hw_rest.model.Authorities;
-import ru.netology.hw_rest.model.User;
+import ru.netology.hw_rest.model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,21 +17,16 @@ public class UserRepository {
 
     static {
 
-        storage.add(new User("Ivan", "555555"));
-        storage.add(new User("Oleg", "11111"));
-        storage.add(new User("Anna", "33333"));
-        storage.add(new User("Olga", "44444"));
-        storage.add(new User("Masha", "22222"));
+        storage.add(new User("Ivan", "11111"));
+        storage.add(new User("Admin", "22222",READ,WRITE,DELETE));
     }
 
     public List<Authorities> getUserAuthorities(User user) {
         if (!storage.contains(user)) return new ArrayList<>();
-        return getAllAuthorities();
+        user=storage.get(storage.indexOf(user));
+        return Arrays.asList(user.getAuthorities());
     }
 
-    private List<Authorities> getAllAuthorities() {
-        return List.of(READ, WRITE, DELETE);
-    }
 
     public UserRepository() {
     }
