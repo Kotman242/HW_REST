@@ -11,7 +11,7 @@ import ru.netology.hw_rest.exceptions.UnauthorizedUser;
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
 
-    @ExceptionHandler({InvalidCredentials.class,MethodArgumentNotValidException.class})
+    @ExceptionHandler({InvalidCredentials.class, MethodArgumentNotValidException.class})
     public ResponseEntity<String> invalidCredentialsHandler(InvalidCredentials e) {
         return new ResponseEntity<>("The data is incorrect", HttpStatus.BAD_REQUEST);
     }

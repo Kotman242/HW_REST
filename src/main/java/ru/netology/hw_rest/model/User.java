@@ -9,13 +9,11 @@ public class User {
     private String password;
 
     private Authorities[] authorities;
-    private static final Authorities[] DEFAULT_AUTHORITIES = {Authorities.READ,Authorities.WRITE};
 
-    public User(String user, String password, Authorities...authorities) {
+    public User(String user, String password, Authorities... authorities) {
         this.user = user;
         this.password = password;
-        if(authorities.length==0) this.authorities= DEFAULT_AUTHORITIES;
-        else this.authorities=authorities;
+        this.authorities = authorities;
     }
 
     public String getUser() {
