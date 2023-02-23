@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 import ru.netology.hw_rest.model.Authorities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,25 +14,23 @@ import static ru.netology.hw_rest.model.Authorities.*;
 @Repository
 public class UserRepository {
 
-    private static final ConcurrentHashMap<String, String> storage = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, HashMap<String, Authorities[]>> storage = new ConcurrentHashMap<>();
 
     static {
-        storage.put("Ivan", "555555");
-        storage.put("Oleg", "11111");
-        storage.put("Anna", "33333");
-        storage.put("Olga", "44444");
-        storage.put("Masha", "22222");
+        storage.put("Admin", new HashMap<>());
+        storage.get("Admin").put("55555", new Authorities[]{WRITE, READ, DELETE});
+        storage.put("Oleg", new HashMap<>());
+        storage.get("Oleg").put("11111", new Authorities[]{WRITE, READ});
     }
 
     public List<Authorities> getUserAuthorities(String user, String password) {
-        if (!storage.containsKey(user) ||
-                !storage.get(user).equals(password)) return new ArrayList<>();
-        return getAllAuthorities();
+        HashMap<String, Authorities[]> result = storage.get(user);
+        if (result == null) return new ArrayList<>();
+        Authorities[] authorities = result.get(password);
+        if (authorities == null) return new ArrayList<>();
+        return Arrays.asList(authorities);
     }
 
-    private List<Authorities> getAllAuthorities() {
-        return List.of(READ, WRITE, DELETE);
-    }
 
     public UserRepository() {
     }
