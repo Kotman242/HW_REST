@@ -1,0 +1,8 @@
+version: '1'
+
+
+services:
+  app3:
+    image: 'firstapp:2.0'
+    ports:
+      - '8080:8080'
